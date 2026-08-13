@@ -1,13 +1,24 @@
 package br.com.fiap.springmvc.model;
 
 public enum Genero {
-    TERROR,
-    ROMANCE,
-    ACAO,
-    SUSPENSE,
-    FICCSO_CIENTIFICA,
-    BIOGRAFIA,
-    FILOSOFIA,
-    HISTORIA,
-    CIENCIA
+    TERROR ("Terror"),
+    ROMANCE("Romance"),
+    ACAO("Ação"),
+    SUSPENSE("Suspense"),
+    FICCAO_CIENTIFICA("Ficção Científica"),
+    BIOGRAFIA("Biografia"),
+    FILOSOFIA("Filosofia"),
+    HISTORIA("Historia"),
+    CIENCIA("Ciência"),
+    DIDATICO("Didático");
+
+    private final String descricao;
+
+    Genero(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }
