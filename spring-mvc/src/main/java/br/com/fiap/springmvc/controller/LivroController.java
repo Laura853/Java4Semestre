@@ -6,10 +6,13 @@ import br.com.fiap.springmvc.service.LivroService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/livros")
@@ -30,6 +33,32 @@ public class LivroController {
     @PostMapping("/cadastrar")
     public String cadastrar(Model model, Livro livro){
         livroService.create(livro);
-        return "livroLista";
+        return lista(model);
     }
+
+    @GetMapping("/lista")
+    public String lista(Model model) {
+        List<Livro> livros = livroService.readAll();
+        model.addAttribute("listaLivros", livros);
+        return "listaLivros";
+    }
+
+
+    @GetMapping("/update")
+    public String update(@PathVariable UUID id, Model model){
+        model.addAttribute("livro", livroService.readById(id));
+        model.addAttribute("generos", Arrays.asList(Genero.values()));
+        return "livroCadastro";
+    }
+
+    @GetMapping("/deletar/id")
+    public String deletar(@PathVariable UUID id, Model model){
+        boolean deletado = livroService.delete(id);
+        if (deletado){
+            return lista(model);
+        }
+        return lista(model);
+    }
+
+
 }
